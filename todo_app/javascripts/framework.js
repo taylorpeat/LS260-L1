@@ -21,7 +21,7 @@ function ModelConstructor(options) {
     triggerChange: function() {
       this.__events.forEach(function(event) {
         event();
-      })
+      });
     },
     addCallback: function(callback) {
       this.__events.push(callback);
@@ -75,6 +75,9 @@ function CollectionConstructor(options) {
     remove: function(model) {
       if (Number.isInteger(model)) {
         model_id = model;
+        model = this.models.filter(function(md) {
+          return md.id === model;
+        })[0];
       } else {
         model_id = model.id;
       }
@@ -87,6 +90,7 @@ function CollectionConstructor(options) {
           });
       }
 
+      model.remove();
       model.__remove();
     },
     set: function(collection) {
